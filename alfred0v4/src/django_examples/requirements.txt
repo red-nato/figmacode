@@ -1,0 +1,34 @@
+# Django Requirements
+# Instala con: pip install -r requirements.txt
+
+# Django Core
+Django>=5.0,<6.0
+djangorestframework>=3.14.0
+
+# Database
+psycopg2-binary>=2.9.9  # PostgreSQL adapter (opcional, para producción)
+
+# CORS
+django-cors-headers>=4.3.1
+
+# Authentication & Security
+django-environ>=0.11.2  # Para manejar variables de entorno
+
+# Testing
+pytest>=7.4.3
+pytest-django>=4.7.0
+factory-boy>=3.3.0  # Para fixtures de prueba
+
+# Code Quality
+black>=23.12.1  # Formateo de código
+flake8>=6.1.0  # Linting
+isort>=5.13.2  # Ordenar imports
+
+# Production Server
+gunicorn>=21.2.0  # WSGI server
+whitenoise>=6.6.0  # Servir archivos estáticos
+
+# Optional pero recomendado
+django-debug-toolbar>=4.2.0  # Solo para desarrollo
+django-extensions>=3.2.3  # Utilidades útiles
+pillow>=10.1.0  # Si vas a manejar imágenes

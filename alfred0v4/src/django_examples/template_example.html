@@ -1,0 +1,105 @@
+{% load static %}
+{# quiz_game/templates/quiz_game/index.html #}
+{# Template para servir la aplicación React desde Django #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juego de preguntas y respuestas con sistema de tokens">
+    <meta name="author" content="Tu Nombre">
+    <title>Quiz Game - Sistema de Tokens</title>
+    
+    {# CSRF Token para peticiones POST desde React #}
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    
+    {# Preconnect para mejorar performance #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    {# Favicon #}
+    <link rel="icon" type="image/svg+xml" href="{% static 'quiz_game/vite.svg' %}">
+    
+    {# CSS generado por Vite - El nombre del archivo cambia con cada build #}
+    {# Opción 1: Hardcoded (debes actualizar después de cada build) #}
+    {# <link rel="stylesheet" href="{% static 'quiz_game/assets/index-[hash].css' %}"> #}
+    
+    {# Opción 2: Usando django-vite (recomendado) #}
+    {# {% vite_asset 'main.tsx' %} #}
+    
+    {# Opción 3: Cargar desde manifest.json (ver ejemplo abajo) #}
+    <link rel="stylesheet" href="{% static 'quiz_game/assets/index.css' %}">
+    
+    <style>
+        /* Estilos de carga mientras React se inicializa */
+        #root {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loading {
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #666;
+            text-align: center;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    {# Contenedor principal de React #}
+    <div id="root">
+        {# Mostrar mientras carga React #}
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Cargando aplicación...</p>
+        </div>
+    </div>
+    
+    {# JavaScript generado por Vite #}
+    {# IMPORTANTE: El nombre del archivo incluye un hash que cambia con cada build #}
+    {# Debes actualizar esto después de cada npm run build #}
+    <script type="module" src="{% static 'quiz_game/assets/index.js' %}"></script>
+    
+    {# Script para pasar datos de Django a React (opcional) #}
+    <script>
+        // Hacer el CSRF token disponible para fetch requests
+        window.CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').content;
+        
+        // Pasar configuración del servidor a React (opcional)
+        window.DJANGO_CONFIG = {
+            apiBaseUrl: '{% url "quiz_game:home" %}api/',
+            staticUrl: '{% static "" %}',
+            mediaUrl: '{{ MEDIA_URL }}',
+            debug: {{ DEBUG|yesno:"true,false" }},
+            language: '{{ LANGUAGE_CODE }}',
+        };
+    </script>
+    
+    {# Google Analytics o tracking (opcional) #}
+    {% if not DEBUG %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    {% endif %}
+</body>
+</html>
